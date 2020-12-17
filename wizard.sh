@@ -55,6 +55,8 @@ mv -v /docker_volume.tar.gz /var/www/html
 systemctl restart nginx
 
 # Start build process
+touch stage3/SKIP stage4/SKIP stage5/SKIP stage4/SKIP_IMAGES stage5/SKIP_IMAGES
+rm -rf stage2/EXPORT_NOOBS
 ./build.sh -c ./config
 
 # Remove Docker data volume

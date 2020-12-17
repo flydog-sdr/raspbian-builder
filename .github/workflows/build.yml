@@ -1,0 +1,19 @@
+name: Build FlyDog SDR
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Build Image
+      id: build
+      run: |
+        sudo bash ./wizard.sh
+        echo "::set-output name=status::success

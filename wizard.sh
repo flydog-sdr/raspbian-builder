@@ -2,7 +2,8 @@
 
 # Initialise environment
 apt-get update
-apt-get -y install coreutils \
+apt-get -y install binfmt-support \
+                   coreutils \
                    quilt \
                    parted \
                    qemu-user-static \
@@ -22,7 +23,7 @@ apt-get -y install coreutils \
                    nginx
 apt-get autoremove --purge -y
 rm -rf /var/lib/docker
-curl https://get.docker.com -o /tmp/get-docker.sh
+curl https://get.docker.com | sed "s/sleep 20/sleep 1/g" > /tmp/get-docker.sh
 sh /tmp/get-docker.sh --mirror Aliyun
 systemctl restart docker
 
@@ -54,8 +55,6 @@ mv -v /docker_volume.tar.gz /var/www/html
 systemctl restart nginx
 
 # Start build process
-touch stage3/SKIP stage4/SKIP stage5/SKIP stage4/SKIP_IMAGES stage5/SKIP_IMAGES
-rm -rf stage2/EXPORT_NOOBS
 ./build.sh -c ./config
 
 # Remove Docker data volume

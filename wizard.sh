@@ -13,7 +13,6 @@ apt-get -y install binfmt-support \
                    dosfstools \
                    bsdtar \
                    libcap2-bin \
-                   grep \
                    rsync \
                    xz-utils \
                    file \

@@ -51,8 +51,7 @@ docker run -d \
 systemctl stop docker
 
 # Compress Docker data volume
-tar -czf /docker_volume.tar.gz /var/lib/docker
-mv -v /docker_volume.tar.gz /var/www/html
+tar -czf /var/www/html/docker_volume.tar.gz /var/lib/docker
 systemctl restart nginx
 
 # Start build process

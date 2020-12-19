@@ -17,6 +17,7 @@ apt-get -y install binfmt-support \
                    xz-utils \
                    file \
                    git \
+                   grep \
                    curl \
                    bc \
                    nginx
@@ -24,6 +25,7 @@ apt-get autoremove --purge -y
 rm -rf /var/lib/docker
 curl https://get.docker.com | sed "s/sleep 20/sleep 1/g" > /tmp/get-docker.sh
 sh /tmp/get-docker.sh --mirror Aliyun
+systemctl disable docker
 systemctl restart docker
 
 # Pull Docker images

@@ -11,6 +11,10 @@ rm -rf /get-docker.sh /var/lib/docker
 curl http://127.0.0.1/docker_volume.tar.gz -o /docker_volume.tar.gz
 tar -xf /docker_volume.tar.gz -C /
 rm -rf /docker_volume.tar.gz
+for LOG in $(find /var/lib/docker/containers -name *-json.log); do
+  echo "Clean container logs: $LOG"
+  cat /dev/null > $LOG
+done
 echo "Docker installed."
 
 # Enable Docker

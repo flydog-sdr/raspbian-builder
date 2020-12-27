@@ -24,6 +24,7 @@ apt-get -y install binfmt-support \
                    bc \
                    nginx
 apt-get autoremove --purge -y
+systemctl stop docker
 rm -rf /var/lib/docker
 curl https://get.docker.com | sed "s/sleep 20/sleep 1/g" > /tmp/get-docker.sh
 sh /tmp/get-docker.sh --mirror Aliyun

@@ -6,7 +6,7 @@ apt-get -y install binfmt-support \
                    coreutils \
                    quilt \
                    parted \
-				   grep \
+                   grep \
                    qemu-user-static \
                    debootstrap \
                    zerofree \

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialise environment
-rm -rf deploy work
+rm -rf deploy
 apt-get update
 apt-get -y install binfmt-support \
                    coreutils \

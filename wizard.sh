@@ -64,3 +64,5 @@ rm -rf stage2/EXPORT_NOOBS
 
 # Remove Docker data volume
 rm -f /var/www/html/docker_volume.tar.gz
+docker rm -f $(docker ps -aq)
+docker image rm -f $(docker images -q)

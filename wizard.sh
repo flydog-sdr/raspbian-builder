@@ -62,5 +62,5 @@ ${BASE_PATH}/builder/build.sh -c ${BASE_PATH}/config
 docker rm -f $(docker ps -aq)
 docker image rm -f $(docker images -q)
 docker network rm flydog-sdr
-docker volume rm flydog-sdr
+docker volume rm kiwi.config
 echo y | docker system prune -a

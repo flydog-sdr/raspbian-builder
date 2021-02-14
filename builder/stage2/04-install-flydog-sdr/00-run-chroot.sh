@@ -7,8 +7,6 @@ bash /get-docker.sh --mirror Aliyun
 rm -rf /get-docker.sh /var/lib/docker
 
 # Import Docker Data Volume
-# Fetching docker_volume.tar.gz from localhost:80
-curl http://127.0.0.1/docker_volume.tar.gz -o /docker_volume.tar.gz
 tar -xf /docker_volume.tar.gz -C /
 rm -rf /docker_volume.tar.gz
 for LOG in $(find /var/lib/docker/containers -name *-json.log); do
@@ -25,3 +23,4 @@ echo "Docker enabled."
 mkdir -p /etc/modules-load.d
 echo "i2c-dev" >> /etc/modules-load.d/modules.conf
 echo "I2C enabled."
+

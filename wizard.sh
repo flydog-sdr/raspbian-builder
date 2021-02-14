@@ -1,13 +1,21 @@
 #!/bin/bash
 
+# Define basic variables
+BASE_PATH=$(cd `dirname $0`; pwd)
+DOCKER_VOLUME="/var/lib/docker"
+DOCKER_ARCHIVE="${BASE_PATH}/builder/stage2/00-copies-and-fills/docker_volume.tar.gz"
+
+# Pruge previous files
+rm -rf ${BASE_PATH}/builder/deploy \
+       ${BASE_PATH}/builder/work \
+       ${DOCKER_ARCHIVE}
+
 # Initialise environment
-rm -rf deploy work
 apt-get update
 apt-get -y install binfmt-support \
                    coreutils \
                    quilt \
                    parted \
-                   grep \
                    qemu-user-static \
                    debootstrap \
                    zerofree \
@@ -19,17 +27,9 @@ apt-get -y install binfmt-support \
                    xz-utils \
                    file \
                    git \
-                   grep \
                    curl \
-                   bc \
-                   nginx
+                   bc
 apt-get autoremove --purge -y
-systemctl stop docker
-rm -rf /var/lib/docker
-curl https://get.docker.com | sed "s/sleep 20/sleep 1/g" > /tmp/get-docker.sh
-sh /tmp/get-docker.sh --mirror Aliyun
-systemctl disable docker
-systemctl restart docker
 
 # Pull Docker images
 docker network create -d bridge flydog-sdr
@@ -51,21 +51,16 @@ docker run -d \
            --volume /var/run/docker.sock:/var/run/docker.sock \
            --volume kiwi.config:/etc/kiwi.config \
            registry.cn-shanghai.aliyuncs.com/flydog-sdr/admin:latest
-systemctl stop docker
 
 # Compress Docker data volume
-tar -czf /var/www/html/docker_volume.tar.gz /var/lib/docker
-systemctl restart nginx
+tar -czf ${DOCKER_ARCHIVE} ${DOCKER_VOLUME}
 
 # Start build process
-touch stage3/SKIP stage4/SKIP stage5/SKIP stage4/SKIP_IMAGES stage5/SKIP_IMAGES
-rm -rf stage2/EXPORT_NOOBS
-./build.sh -c ./config
+${BASE_PATH}/builder/build.sh -c ${BASE_PATH}/config
 
-# Remove Docker data volume
-rm -f /var/www/html/docker_volume.tar.gz
-systemctl restart docker
+# Reset Docker
 docker rm -f $(docker ps -aq)
 docker image rm -f $(docker images -q)
 docker network rm flydog-sdr
-systemctl stop docker
+docker volume rm kiwi.config
+echo y | docker system prune -a

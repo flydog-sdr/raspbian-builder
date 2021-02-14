@@ -1,6 +1,5 @@
-#!/bin/bash -e
-mv docker_volume.tar.gz ${ROOTFS_DIR}/docker_volume.tar.gz
-on_chroot << EOF
+#!/bin/bash
+
 # Install Docker
 echo "Installing Docker..."
 curl --insecure https://get.docker.com | sed "s/-fsSL/-L --insecure/g" > /get-docker.sh
@@ -24,4 +23,4 @@ echo "Docker enabled."
 mkdir -p /etc/modules-load.d
 echo "i2c-dev" >> /etc/modules-load.d/modules.conf
 echo "I2C enabled."
-EOF
+

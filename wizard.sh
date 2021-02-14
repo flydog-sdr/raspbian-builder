@@ -3,7 +3,7 @@
 # Define basic variables
 BASE_PATH=$(cd `dirname $0`; pwd)
 DOCKER_VOLUME="/var/lib/docker"
-DOCKER_ARCHIVE="${BASE_PATH}/builder/stage2/04-install-flydog-sdr/docker_volume.tar.gz"
+DOCKER_ARCHIVE="${BASE_PATH}/builder/stage2/00-copies-and-fills/docker_volume.tar.gz"
 
 # Pruge previous files
 rm -rf ${BASE_PATH}/builder/deploy \

@@ -63,3 +63,4 @@ docker rm -f $(docker ps -aq)
 docker image rm -f $(docker images -q)
 docker network rm flydog-sdr
 docker volume rm flydog-sdr
+echo y | docker system prune -a

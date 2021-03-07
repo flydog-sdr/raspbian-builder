@@ -56,7 +56,8 @@ docker run -d \
 tar -czf ${DOCKER_ARCHIVE} ${DOCKER_VOLUME}
 
 # Start build process
-${BASE_PATH}/builder/build.sh -c ${BASE_PATH}/config
+cd ${BASE_PATH}/builder
+./build.sh -c ./config
 
 # Reset Docker
 docker rm -f $(docker ps -aq)

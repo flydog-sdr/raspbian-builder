@@ -62,5 +62,5 @@ cd ${BASE_PATH}/builder
 # Reset Docker
 /etc/init.d/docker stop
 rm -rf ${DOCKER_VOLUME}
-curl -o /tmp/docker.sh https://get.docker.com
+curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
 sh /tmp/docker.sh --mirror Aliyun

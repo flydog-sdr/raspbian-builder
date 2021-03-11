@@ -32,6 +32,7 @@ apt-get -y install binfmt-support \
 apt-get autoremove --purge -y
 
 # Pull Docker images
+/etc/init.d/docker restart
 docker network create -d bridge flydog-sdr
 docker run -d \
            --hostname flydog-sdr \
@@ -53,6 +54,7 @@ docker run -d \
            registry.cn-shanghai.aliyuncs.com/flydog-sdr/admin:latest
 
 # Compress Docker data volume
+/etc/init.d/docker stop
 tar -czf ${DOCKER_ARCHIVE} ${DOCKER_VOLUME}
 
 # Start build process
@@ -60,7 +62,6 @@ cd ${BASE_PATH}/builder
 ./build.sh -c ../config
 
 # Reset Docker
-/etc/init.d/docker stop
 rm -rf ${DOCKER_VOLUME}
 curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
 sh /tmp/docker.sh --mirror Aliyun

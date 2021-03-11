@@ -60,8 +60,7 @@ cd ${BASE_PATH}/builder
 ./build.sh -c ../config
 
 # Reset Docker
-docker rm -f $(docker ps -aq)
-docker image rm -f $(docker images -q)
-docker network rm flydog-sdr
-docker volume rm kiwi.config
-echo y | docker system prune -a
+/etc/init.d/docker stop
+rm -rf ${DOCKER_VOLUME}
+curl -o /tmp/docker.sh https://get.docker.com
+sh /tmp/docker.sh --mirror Aliyun

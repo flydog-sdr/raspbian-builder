@@ -31,6 +31,12 @@ apt-get -y install binfmt-support \
                    bc
 apt-get autoremove --purge -y
 
+# Reset Docker
+/etc/init.d/docker stop
+rm -rf ${DOCKER_VOLUME}
+curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
+sh /tmp/docker.sh --mirror Aliyun
+
 # Pull Docker images
 /etc/init.d/docker restart
 docker network create -d bridge flydog-sdr
@@ -61,8 +67,6 @@ tar -czf ${DOCKER_ARCHIVE} ${DOCKER_VOLUME}
 cd ${BASE_PATH}/builder
 ./build.sh -c ../config
 
-# Reset Docker
+# Clean
 /etc/init.d/docker stop
-rm -rf ${DOCKER_VOLUME}
-curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
-sh /tmp/docker.sh --mirror Aliyun
+rm -rf ${DOCKER_ARCHIVE}

@@ -20,7 +20,7 @@ check_environment() {
     exit 1
   fi
   if [[ ! -f /usr/bin/apt-get ]];then
-    echo "Not Debian or Ubuntu Linux, exiting..."
+    echo "Not Debian or Ubuntu Linux distributions, exiting..."
     exit 1
   fi
 }
@@ -72,7 +72,8 @@ deploy_apps() {
   /etc/init.d/docker restart
 }
 
-compress_docker_volume() {
+archive_docker_volume() {
+  rm -rf ${DOCKER_ARCHIVE}
   tar -czf ${DOCKER_ARCHIVE} ./docker
   rm -rf ${BASE_PATH}/docker
 }
@@ -86,7 +87,7 @@ main() {
   check_environment
   initialise_environment
   deploy_apps
-  compress_docker_volume
+  archive_docker_volume
   execute_build
 }
 main "$@"; exit

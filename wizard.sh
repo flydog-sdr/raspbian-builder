@@ -88,6 +88,5 @@ main() {
   deploy_apps
   compress_docker_volume
   execute_build
-  clean_work
 }
 main "$@"; exit

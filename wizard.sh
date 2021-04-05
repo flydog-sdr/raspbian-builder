@@ -35,10 +35,10 @@ initialise_environment() {
   rm -rf /tmp/docker.sh ${BASE_PATH}/docker/*
   tar xf ${BASE_PATH}/docker_volume.tar.bz2 -C ${BASE_PATH}/docker
   if [[ ! -f /etc/docker/daemon.json ]];then
-    echo '{"data-root":"BASE_PATH/docker"}' | sed "s/BASE_PATH/${BASE_PATH}/g" > /etc/docker/daemon.json  
+    echo '{"data-root":"BASE_PATH/docker"}' | sed "s#BASE_PATH#${BASE_PATH}#g" > /etc/docker/daemon.json  
   else
     mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
-    echo '{"data-root":"BASE_PATH/docker"}' | sed "s/BASE_PATH/${BASE_PATH}/g" > /etc/docker/daemon.json  
+    echo '{"data-root":"BASE_PATH/docker"}' | sed "s#BASE_PATH#${BASE_PATH}#g" > /etc/docker/daemon.json  
   fi
   /etc/init.d/docker restart
 }

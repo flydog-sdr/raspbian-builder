@@ -41,6 +41,7 @@ initialise_environment() {
     echo '{"data-root":"BASE_PATH/docker"}' | sed "s#BASE_PATH#${BASE_PATH}#g" > /etc/docker/daemon.json  
   fi
   /etc/init.d/docker restart
+  sleep 5s
 }
 
 deploy_apps() {

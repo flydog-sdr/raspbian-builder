@@ -32,7 +32,7 @@ initialise_environment() {
   sh /tmp/docker.sh --mirror Aliyun
   apt-get autoremove --purge -y
   mkdir -p ${BASE_PATH}/docker
-  rm -rf ${BASE_PATH}/docker/*
+  rm -rf /tmp/docker.sh ${BASE_PATH}/docker/*
   tar xf ${BASE_PATH}/docker_volume.tar.bz2 -C ${BASE_PATH}/docker
   if [[ ! -f /etc/docker/daemon.json ]];then
     echo '{"data-root":"BASE_PATH/docker"}' | sed "s/BASE_PATH/${BASE_PATH}/g" > /etc/docker/daemon.json  

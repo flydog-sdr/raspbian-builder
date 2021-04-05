@@ -81,7 +81,8 @@ archive_docker_volume() {
 
 execute_build() {
   cd ${BASE_PATH}/builder
-  ./build.sh -c ../config
+  chmod +x *.sh
+  bash ./build.sh -c ../config
 }
 
 main() {

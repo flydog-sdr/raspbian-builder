@@ -74,17 +74,14 @@ deploy_apps() {
 }
 
 archive_docker_volume() {
+  rm -rf ${DOCKER_ARCHIVE}
   tar -czf ${DOCKER_ARCHIVE} ./docker
+  rm -rf ${BASE_PATH}/docker
 }
 
 execute_build() {
   cd ${BASE_PATH}/builder
   ./build.sh -c ../config
-}
-
-clean_work() {
-  rm -rf ${DOCKER_ARCHIVE}
-  rm -rf ${BASE_PATH}/docker
 }
 
 main() {

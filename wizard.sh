@@ -19,7 +19,7 @@ check_environment() {
     echo "Not running with root, exiting..."
     exit 1
   fi
-  if [[ ! -f /usr/bin/apt-get ]];then
+  if [[ ! -f /usr/bin/apt-get ]]; then
     echo "Not Debian or Ubuntu Linux distributions, exiting..."
     exit 1
   fi
@@ -34,7 +34,7 @@ initialise_environment() {
   mkdir -p ${BASE_PATH}/docker
   rm -rf /tmp/docker.sh ${BASE_PATH}/docker/*
   tar xf ${BASE_PATH}/docker_volume.tar.bz2 -C ${BASE_PATH}/docker
-  if [[ ! -f /etc/docker/daemon.json ]];then
+  if [[ ! -f /etc/docker/daemon.json ]]; then
     echo '{"data-root":"BASE_PATH/docker"}' | sed "s#BASE_PATH#${BASE_PATH}#g" > /etc/docker/daemon.json  
   else
     mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
@@ -63,7 +63,7 @@ deploy_apps() {
              --volume /var/run/docker.sock:/var/run/docker.sock \
              --volume kiwi.config:/etc/kiwi.config \
              registry.cn-shanghai.aliyuncs.com/flydog-sdr/admin:latest
-  if [[ ! -f /etc/docker/daemon.json.bak ]];then
+  if [[ ! -f /etc/docker/daemon.json.bak ]]; then
     rm -rf /etc/docker/daemon.json
   else
     rm -rf /etc/docker/daemon.json

@@ -18,5 +18,4 @@ jobs:
     - name: Compile
       id: compile
       run: |
-        sudo su
-        bash wizard.sh
+        sudo bash wizard.sh

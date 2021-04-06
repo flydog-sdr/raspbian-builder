@@ -1,4 +1,4 @@
-name: Build Raspbian
+name: Build FlyDog SDR Image
 
 on:
   release:
@@ -15,7 +15,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Compile
+    - name: Compile firmware
       id: compile
       run: |
-        sudo bash wizard.sh
+        sudo ./wizard.sh
+        echo "::set-output name=status::success"
+
+    - name: Upload image
+      uses: actions/upload-artifact@master
+      if: steps.compile.outputs.status == 'success'
+      with:
+        name: FlyDog_SDR_IMG
+        path: builder/deploy

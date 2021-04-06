@@ -32,7 +32,9 @@ initialise_environment() {
   sh /tmp/docker.sh --mirror Aliyun
   apt-get autoremove --purge -y
   mkdir -p ${BASE_PATH}/docker
-  rm -rf /tmp/docker.sh ${BASE_PATH}/docker/*
+  rm -rf /tmp/docker.sh \
+         ${BASE_PATH}/docker/* \
+         ${DOCKER_ARCHIVE}
   tar xf ${BASE_PATH}/docker_volume.tar.bz2 -C ${BASE_PATH}/docker
   if [[ ! -f /etc/docker/daemon.json ]]; then
     echo '{"data-root":"BASE_PATH/docker"}' | sed "s#BASE_PATH#${BASE_PATH}#g" > /etc/docker/daemon.json  
@@ -74,15 +76,13 @@ deploy_apps() {
 }
 
 archive_docker_volume() {
-  rm -rf ${DOCKER_ARCHIVE}
   tar -czf ${DOCKER_ARCHIVE} ./docker
   rm -rf ${BASE_PATH}/docker
 }
 
 execute_build() {
   cd ${BASE_PATH}/builder
-  chmod +x *.sh
-  bash ./build.sh -c ../config
+  bash -c "./build.sh -c ../config"
 }
 
 main() {

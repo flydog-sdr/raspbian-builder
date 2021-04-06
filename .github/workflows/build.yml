@@ -1,6 +1,8 @@
 name: Build FlyDog SDR Image
 
 on:
+  schedule:
+  - cron: 0 20 * * *
   release:
     types: published
   push:

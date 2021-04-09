@@ -31,7 +31,8 @@ initialise_environment() {
   curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
   sh /tmp/docker.sh --mirror Aliyun
   apt-get autoremove --purge -y
-  mkdir -p ${BASE_PATH}/docker
+  mkdir -p ${BASE_PATH}/docker \
+           /etc/docker
   rm -rf /tmp/docker.sh \
          ${BASE_PATH}/docker/* \
          ${DOCKER_ARCHIVE}

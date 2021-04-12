@@ -7,7 +7,7 @@ bash /get-docker.sh --mirror Aliyun
 rm -rf /get-docker.sh /var/lib/docker
 
 # Import Docker Data Volume
-tar -xf /docker_volume.tar.gz -C /var/lib
+tar -xf /docker_volume.tar.gz -C /
 rm -rf /docker_volume.tar.gz
 for LOG in $(find /var/lib/docker/containers -name *-json.log); do
   echo "Clean container logs: $LOG"

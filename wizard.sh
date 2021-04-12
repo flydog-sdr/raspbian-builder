@@ -31,20 +31,12 @@ initialise_environment() {
   curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
   sh /tmp/docker.sh --mirror Aliyun
   apt-get autoremove --purge -y
-  mkdir -p ${BASE_PATH}/docker \
-           /etc/docker
   rm -rf /tmp/docker.sh \
-         ${BASE_PATH}/docker/* \
+         /var/lib/docker/* \
          ${DOCKER_ARCHIVE}
-  tar xf ${BASE_PATH}/docker_volume.tar.bz2 -C ${BASE_PATH}/docker
-  if [[ ! -f /etc/docker/daemon.json ]]; then
-    echo '{"data-root":"BASE_PATH/docker"}' | sed "s#BASE_PATH#${BASE_PATH}#g" > /etc/docker/daemon.json  
-  else
-    mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
-    echo '{"data-root":"BASE_PATH/docker"}' | sed "s#BASE_PATH#${BASE_PATH}#g" > /etc/docker/daemon.json  
-  fi
+  echo y | docker system prune
   /etc/init.d/docker restart
-  sleep 5s
+  sleep 3s
 }
 
 deploy_apps() {
@@ -67,18 +59,14 @@ deploy_apps() {
              --volume /var/run/docker.sock:/var/run/docker.sock \
              --volume kiwi.config:/etc/kiwi.config \
              registry.cn-shanghai.aliyuncs.com/flydog-sdr/admin:latest
-  if [[ ! -f /etc/docker/daemon.json.bak ]]; then
-    rm -rf /etc/docker/daemon.json
-  else
-    rm -rf /etc/docker/daemon.json
-    mv /etc/docker/daemon.json.bak /etc/docker/daemon.json
-  fi
-  /etc/init.d/docker restart
+  /etc/init.d/docker stop
 }
 
 archive_docker_volume() {
-  tar -czf ${DOCKER_ARCHIVE} ./docker
-  rm -rf ${BASE_PATH}/docker
+  tar -czf ${DOCKER_ARCHIVE} /var/lib/docker
+  rm -rf /var/lib/docker/*
+  echo y | docker system prune
+  /etc/init.d/docker restart
 }
 
 execute_build() {

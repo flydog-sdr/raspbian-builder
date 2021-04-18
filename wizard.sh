@@ -26,6 +26,7 @@ check_environment() {
 }
 
 initialise_environment() {
+  modprobe binfmt_misc
   apt-get update
   apt-get install -y ${BUILD_DEPENDS}
   curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh

@@ -31,6 +31,7 @@ initialise_environment() {
   apt-get install -y ${BUILD_DEPENDS}
   curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
   sh /tmp/docker.sh --mirror Aliyun
+  /etc/init.d/docker restart
   apt-get autoremove --purge -y
   rm -rf /tmp/docker.sh \
          /var/lib/docker/* \

@@ -1,13 +1,12 @@
 name: Build FlyDog SDR Image
 
 on:
-  schedule:
-  - cron: 0 20 * * *
-  release:
-    types: published
+  #schedule:
+  #- cron: 0 20 * * *
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   build:

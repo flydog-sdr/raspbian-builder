@@ -12,7 +12,7 @@
 # Define basic variables
 BASE_PATH=$(cd `dirname $0`; pwd)
 DOCKER_ARCHIVE="${BASE_PATH}/builder/stage2/00-copies-and-fills/docker_volume.tar.gz"
-BUILD_DEPENDS="binfmt-support coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools bsdtar libcap2-bin rsync xz-utils file git curl bc"
+BUILD_DEPENDS="binfmt-support coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils file git curl bc"
 
 check_environment() {
   if [[ ${UID} -ne '0' ]]; then

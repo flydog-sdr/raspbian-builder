@@ -40,7 +40,7 @@ jobs:
           name: FlyDog_SDR_IMG
           path: builder/deploy
 
-      - name: Create Release
+      - name: Create release
         id: create_release
         uses: actions/create-release@v1
         if: steps.compile.outputs.status == 'success'
@@ -53,3 +53,12 @@ jobs:
             This is the daily build Raspbian image of FlyDog SDR.
           draft: false
           prerelease: false
+
+      - name: Upload image to release
+        uses: actions/upload-artifact@v2
+        with:
+          name: FlyDog_SDR_IMG
+          path: builder/deploy
+          retention-days: 7
+          target-path: FlyDog_SDR_IMG
+        if: steps.compile.outputs.status == 'success' && steps.create_release.outputs.id

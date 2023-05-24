@@ -1,8 +1,8 @@
 name: Build FlyDog SDR Image
 
 on:
-  #schedule:
-  #- cron: 0 20 * * *
+  schedule:
+    - cron: 0 20 * * *
   push:
     branches:
       - master
@@ -13,18 +13,43 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Compile firmware
-      id: compile
-      run: |
-        sudo ./wizard.sh
-        echo "::set-output name=status::success"
+      - name: Set tag and release names
+        id: set_names
+        run: |
+          # Generate tag_name
+          tag_name="v$(date +'%Y%m%d%H%M%S')"
+          echo "::set-output name=tag_name::$tag_name"
 
-    - name: Upload image
-      uses: actions/upload-artifact@master
-      if: steps.compile.outputs.status == 'success'
-      with:
-        name: FlyDog_SDR_IMG
-        path: builder/deploy
+          # Generate release_name
+          release_name="Release $(date +'%Y-%m-%d %H:%M:%S')"
+          echo "::set-output name=release_name::$release_name"
+
+      - name: Compile firmware
+        id: compile
+        run: |
+          sudo ./wizard.sh
+          echo "::set-output name=status::success"
+
+      - name: Upload image
+        uses: actions/upload-artifact@v2
+        if: steps.compile.outputs.status == 'success'
+        with:
+          name: FlyDog_SDR_IMG
+          path: builder/deploy
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        if: steps.compile.outputs.status == 'success'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.set_names.outputs.tag_name }}
+          release_name: ${{ steps.set_names.outputs.release_name }}
+          body: |
+            This is the daily build Raspbian image of FlyDog SDR.
+          draft: false
+          prerelease: false

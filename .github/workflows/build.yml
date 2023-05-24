@@ -19,7 +19,7 @@ jobs:
       - name: Set tag and release names
         id: set_names
         run: |
-          tag_name="Release $(date +'%Y-%m-%d %H:%M:%S')"
+          tag_name="Release_$(date +'%Y%m%d%H%M%S')"
           echo "::set-output name=tag_name::$tag_name"
 
       - name: Compile firmware

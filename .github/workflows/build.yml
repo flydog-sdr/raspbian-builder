@@ -40,25 +40,13 @@ jobs:
           name: FlyDog_SDR_IMG
           path: builder/deploy
 
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Upload firmware to release
+        uses: softprops/action-gh-release@v1
         if: steps.compile.outputs.status == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.set_names.outputs.tag_name }}
-          release_name: ${{ steps.set_names.outputs.release_name }}
           body: |
             This is the daily build Raspbian image of FlyDog SDR.
-          draft: false
-          prerelease: false
-
-      - name: Upload image to release
-        uses: actions/upload-artifact@v2
-        with:
-          name: FlyDog_SDR_IMG
-          path: builder/deploy
-          retention-days: 7
-          target-path: FlyDog_SDR_IMG
-        if: steps.compile.outputs.status == 'success' && steps.create_release.outputs.id
+          files: builder/deploy/*

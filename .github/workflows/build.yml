@@ -19,13 +19,8 @@ jobs:
       - name: Set tag and release names
         id: set_names
         run: |
-          # Generate tag_name
           tag_name="v$(date +'%Y%m%d%H%M%S')"
           echo "::set-output name=tag_name::$tag_name"
-
-          # Generate release_name
-          release_name="Release $(date +'%Y-%m-%d %H:%M:%S')"
-          echo "::set-output name=release_name::$release_name"
 
       - name: Compile firmware
         id: compile
@@ -40,7 +35,7 @@ jobs:
           name: FlyDog_SDR_IMG
           path: builder/deploy
 
-      - name: Upload firmware to release
+      - name: Create release
         uses: softprops/action-gh-release@v1
         if: steps.compile.outputs.status == 'success'
         env:

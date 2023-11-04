@@ -1,5 +1,5 @@
 IMG_NAME='FlyDog-SDR'
-RELEASE='buster'
+RELEASE='bullseye'
 TARGET_HOSTNAME='flydog-sdr'
 FIRST_USER_NAME='flydog'
 FIRST_USER_PASS='flydog-sdr'

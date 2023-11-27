@@ -2,7 +2,9 @@
 
 # Install Docker
 echo "Installing Docker..."
-curl --insecure https://get.docker.com | sed "s/-fsSL/-L --insecure/g" > /get-docker.sh
+curl --insecure https://get.docker.com \
+    | sed "s/-fsSL/-L --insecure/g" \
+    | sed "s/mirrors.aliyun.com/mirrors.bfsu.edu.cn/g" > /get-docker.sh
 bash /get-docker.sh --mirror Aliyun
 rm -rf /get-docker.sh /var/lib/docker
 
